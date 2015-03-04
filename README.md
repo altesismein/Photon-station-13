@@ -1,4 +1,4 @@
-# vgstation
+# Photon-station-13
 
 [Code](http://github.com/PJB3005/Photon-station-13)
 

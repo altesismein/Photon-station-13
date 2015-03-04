@@ -3,6 +3,12 @@
 [Website](http://ss13.undo.it) - [Code](http://github.com/d3athrow/vgstation13/) - [IRC](irc://irc.rizon.net/vgstation) (irc.rizon.net #vgstation)
 
 ---
+### LICENSE
+All code after 4/03/2015 22:45 (GMT) is licensed under GNU AGPL v3 (http://www.gnu.org/licenses/agpl-3.0.html).
+
+All code before 4/03/2015 22:45 (GMT) is licensed under GNU GPL v3 (https://www.gnu.org/licenses/gpl-3.0.html).
+
+including tools unless their readme specifies otherwise. See LICENSE-AGPLv3.txt and LICENSE-GPLv3.txt for more details. All content including icons and sound is under a Creative Commons 3.0 BY-SA license (http://creativecommons.org/licenses/by-sa/3.0/).
 
 ### GETTING THE CODE
 The simplest way to obtain the code is using the github .zip feature.

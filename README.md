@@ -1,6 +1,6 @@
 # vgstation
 
-[Website](http://ss13.undo.it) - [Code](http://github.com/d3athrow/vgstation13/) - [IRC](irc://irc.rizon.net/vgstation) (irc.rizon.net #vgstation)
+[Code](http://github.com/PJB3005/Photon-station-13)
 
 ---
 ### LICENSE
@@ -8,16 +8,16 @@ All code after 4/03/2015 22:45 (GMT) is licensed under GNU AGPL v3 (http://www.g
 
 All code before 4/03/2015 22:45 (GMT) is licensed under GNU GPL v3 (https://www.gnu.org/licenses/gpl-3.0.html).
 
-including tools unless their readme specifies otherwise. See LICENSE-AGPLv3.txt and LICENSE-GPLv3.txt for more details. All content including icons and sound is under a Creative Commons 3.0 BY-SA license (http://creativecommons.org/licenses/by-sa/3.0/).
+including tools unless their readme specifies otherwise. See LICENSE-AGPLv3.txt and LICENSE-GPLv3.txt for more details.
 
 ### GETTING THE CODE
 The simplest way to obtain the code is using the github .zip feature.
 
-Click [here](https://github.com/d3athrow/vgstation13/archive/master.zip) to get the latest stable code as a .zip file, then unzip it to wherever you want.
+Click [here] (https://github.com/PJB3005/Photon-station-13/archive/Bleeding-Edge.zip) to get the latest stable (lolnope) code as a .zip file, then unzip it to wherever you want.
 
 The more complicated and easier to update method is using git.  You'll need to download git or some client from [here](http://git-scm.com/).  When that's installed, right click in any folder and click on "Git Bash".  When that opens, type in:
 
-    git clone https://github.com/d3athrow/vgstation13.git
+    git clone https://github.com/PJB3005/Photon-station-13.git
 
 (hint: hold down ctrl and press insert to paste into git bash)
 
@@ -25,7 +25,7 @@ This will take a while to download, but it provides an easier method for updatin
 
 #### Branches
 
-Keep in mind that we have multiple branches for various purposes.
+Keep in mind that we have multiple branches for various purposes. (Haha, not at this point)
 
 * *master* - "stable" code, used on the main server.
 * *Bleeding-Edge* - The latest unstable code.  _Please do any development against this branch!_

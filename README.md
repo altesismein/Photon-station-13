@@ -2,6 +2,8 @@
 
 [Code](http://github.com/PJB3005/Photon-station-13)
 
+[![Build Status](https://travis-ci.org/PJB3005/Photon-station-13.svg?branch=Bleeding-Edge)](https://travis-ci.org/PJB3005/Photon-station-13)
+
 ---
 ### LICENSE
 All code after 4/03/2015 22:45 (GMT) is licensed under GNU AGPL v3 (http://www.gnu.org/licenses/agpl-3.0.html).

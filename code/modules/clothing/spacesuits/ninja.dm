@@ -26,6 +26,7 @@
 	slowdown = 0
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	siemens_coefficient = 0.2
+	flags_inv = HIDEJUMPSUIT
 
 		//Important parts of the suit.
 	var/mob/living/carbon/affecting = null//The wearer.

@@ -21,7 +21,7 @@
 
 	..()
 
-datum/pipeline/proc/process()//This use to be called called from the pipe networks
+/datum/pipeline/proc/process()//This use to be called called from the pipe networks
 	if((world.timeofday - last_pressure_check) / 10 >= PRESSURE_CHECK_DELAY)
 		//Check to see if pressure is within acceptable limits
 		var/pressure = air.return_pressure()
@@ -134,7 +134,7 @@ datum/pipeline/proc/process()//This use to be called called from the pipe networ
 	var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume/air.volume)
 	air_sample.volume = mingle_volume
 
-	if(istype(target) && target.zone && !iscatwalk(target))
+	if(istype(target) && target.zone)
 		//Have to consider preservation of group statuses
 		var/datum/gas_mixture/turf_copy = new
 
@@ -156,7 +156,7 @@ datum/pipeline/proc/process()//This use to be called called from the pipe networ
 		//turf_air already modified by equalize_gases()
 
 	/*
-	if(istype(target) && !target.processing && !iscatwalk(target))
+	if(istype(target) && !target.processing)
 		if(target.air)
 			if(target.air.check_tile_graphic())
 				target.update_visuals(target.air)

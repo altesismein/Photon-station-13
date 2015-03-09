@@ -305,9 +305,13 @@
 			attack_hand(user)
 		return
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
-		user.drop_item(src)
-		coin = W
-		user << "<span class='notice'>You insert [W] into [src].</span>"
+		if (isnull(coin))
+			user.drop_item(src)
+			coin = W
+			user << "<span class='notice'>You insert a coin into [src].</span>"
+		else
+			user << "<SPAN CLASS='notice'>There's already a coin in [src].</SPAN>"
+
 		return
 	else if(istype(W, /obj/item/voucher))
 		if(can_accept_voucher(W, user))
@@ -600,19 +604,22 @@
 	src.vend_ready = 0 //One thing at a time!!
 
 	if (!by_voucher && (R in coin_records))
-		if(!coin)
-			user << "\blue You need to insert a coin to get this item."
+		if (isnull(coin))
+			user << "<SPAN CLASS='notice'>You need to insert a coin to get this item.</SPAN>"
 			return
-		if(coin.string_attached)
-			if(prob(50))
-				user << "\blue You successfully pull the coin out before the [src] could swallow it."
+
+		if (coin.string_attached)
+			if (prob(50))
+				user.put_in_hands(coin)
+				user << "<SPAN CLASS='notice'>You successfully pulled the coin out before the [src] could swallow it.</SPAN>"
 			else
-				user << "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all."
-		if(coinbox)
-			coin.loc = coinbox
-			coin = null
-		else
-			qdel(coin)
+				user << "<SPAN CLASS='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</SPAN>"
+
+		if (!isnull(coinbox))
+			if (coinbox.can_be_inserted(coin, TRUE))
+				coinbox.handle_item_insertion(coin, TRUE)
+
+		coin = null
 
 	R.amount--
 
@@ -1015,9 +1022,8 @@
 				usr << "You begin to insert \the [C] into \the [src]."
 				if(do_after(user, 10))
 					usr << "<span class='notice'>You secure \the [C]!</span>"
-					user.drop_item()
+					user.drop_item(src)
 					_circuitboard=C
-					C.loc=src
 					playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 					build++
 					update_icon()

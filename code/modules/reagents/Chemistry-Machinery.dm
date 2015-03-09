@@ -132,7 +132,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	if(stat & (BROKEN|NOPOWER)) return
 	if((user.stat && !isobserver(user)) || user.restrained()) return
 	if(!chemical_reagents_list || !chemical_reagents_list.len) return
-
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["amount"] = amount
@@ -162,13 +161,12 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		if(temp)
 			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
 	data["chemicals"] = chemicals
-
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 370, 605)
+		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "Chem Dispenser 5000", 400, 610)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window
@@ -245,8 +243,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return
 		else if(!panel_open)
 			src.beaker =  D
-			user.drop_item()
-			D.loc = src
+			user.drop_item(src)
 			user << "You add the beaker to the machine!"
 			nanomanager.update_uis(src) // update all UIs attached to src
 			return 1
@@ -360,8 +357,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			user << "A beaker is already loaded into the machine."
 			return
 		src.beaker = B
-		user.drop_item()
-		B.loc = src
+		user.drop_item(src)
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
 		update_icon()
@@ -374,8 +370,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return
 
 		src.loaded_pill_bottle = B
-		user.drop_item()
-		B.loc = src
+		user.drop_item(src)
 		user << "You add the pill bottle into the dispenser slot!"
 		src.updateUsrDialog()
 		return 1
@@ -938,8 +933,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return
 
 		src.beaker =  I
-		user.drop_item()
-		I.loc = src
+		user.drop_item(src)
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
 		icon_state = "mixer1"
@@ -960,11 +954,12 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
-	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
+	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK | EJECTNOTDEL
 	pass_flags = PASSTABLE
 	var/inuse = 0
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/limit = 10
+	var/speed_multiplier = 1
 	var/list/blend_items = list (
 
 		//Sheets
@@ -1035,6 +1030,17 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 	return
 
+/obj/machinery/reagentgrinder/RefreshParts()
+	var/T = 0
+	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+		T += M.rating-1
+	limit = initial(limit)+(T * 5)
+
+	T = 0
+	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+		T += M.rating-1
+	speed_multiplier = initial(speed_multiplier)+(T * 0.50)
+
 /obj/machinery/reagentgrinder/update_icon()
 	icon_state = "juicer"+num2text(!isnull(beaker))
 	return
@@ -1067,8 +1073,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			return 0
 		else
 			src.beaker =  O
-			user.drop_item()
-			O.loc = src
+			user.drop_item(src)
 			update_icon()
 			src.updateUsrDialog()
 			return 1
@@ -1112,6 +1117,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/reagentgrinder/attack_hand(mob/user as mob)
 	user.set_machine(src)
 	interact(user)
+
+/obj/machinery/reagentgrinder/attack_robot(mob/user as mob)
+	return attack_hand(user)
 
 /obj/machinery/reagentgrinder/interact(mob/user as mob) // The microwave Menu
 	var/is_chamber_empty = 0
@@ -1248,9 +1256,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(get_turf(src), 'sound/machines/juicer.ogg', 20, 1)
+	playsound(get_turf(src), speed_multiplier < 2 ? 'sound/machines/juicer.ogg' : 'sound/machines/juicerfast.ogg', 30, 1)
 	inuse = 1
-	spawn(50)
+	spawn(50/speed_multiplier)
 		inuse = 0
 		interact(usr)
 	//Snacks
@@ -1281,9 +1289,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(get_turf(src), 'sound/machines/blender.ogg', 50, 1)
+	playsound(get_turf(src), speed_multiplier < 2 ? 'sound/machines/blender.ogg' : 'sound/machines/blenderfast.ogg', 50, 1)
 	inuse = 1
-	spawn(60)
+	spawn(60/speed_multiplier)
 		inuse = 0
 		interact(usr)
 	//Snacks and Plants

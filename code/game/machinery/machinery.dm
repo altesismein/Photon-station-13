@@ -155,12 +155,12 @@ Class Procs:
 		machines -= src
 	if(src in power_machines)
 		power_machines -= src
-
+/*
 	if(component_parts)
 		for(var/atom/movable/AM in component_parts)
 			AM.loc = loc
 			component_parts -= AM
-
+*/
 		component_parts = null
 
 	..()
@@ -415,8 +415,8 @@ Class Procs:
 
 /obj/machinery/proc/dropFrame()
 	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-	M.state = 1
 	M.build_state = 2
+	M.state = 1
 	M.icon_state = "box_1"
 
 /obj/machinery/proc/crowbarDestroy(mob/user)

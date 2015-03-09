@@ -169,8 +169,7 @@ var/global/ingredientLimit = 10
 		return
 	if(. == "valid")
 		if(src.foodChoices) . = src.foodChoices[(input("Select production.") in src.foodChoices)]
-		user.drop_item()
-		I.loc = src
+		user.drop_item(src)
 		src.ingredient = I
 		spawn() src.cook(.)
 		user << "<span class='notice'>You add the [I.name] to the [src.name].</span>"
@@ -221,7 +220,6 @@ var/global/ingredientLimit = 10
 	icon_state_on = "mixer_on"
 	cookSound = 'sound/machines/juicer.ogg'
 
-	v
 
 /obj/machinery/cooking/candy/validateIngredient(var/obj/item/I)
 	. = ..()
@@ -240,6 +238,7 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/candy/getFoodChoices()
 	return (typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable/candy)-(/obj/item/weapon/reagent_containers/food/snacks/customizable/candy))
+
 
 // Still ///////////////////////////////////////////////////////
 

@@ -81,6 +81,45 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 
 		<div class="commit sansserif">
 			<h2 class="date">2015.03.08</h2>
+			<h3 class="author">ArthurDentist updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Can now order Grass Tiles, Carpet Tiles and Bloodbags at Cargo.</li>
+			</ul>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fix big bug with unary vents connecting to pipes incorrectly in certain situations.</li>
+				<li class="tweak">Reduced cost of conveyor belt circuit board.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2015.03.06</h2>
+			<h3 class="author">Velard Amakar updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">large slew of vampire-related additions, tweaks, and refactors</li>
+				<li class="tweak">Enthrall can be used for free, but you need at least 300 blood in your system to use it</li>
+				<li class="tweak">Full power is now called 'Maturity' is activated at 450 instead of 500</li>
+				<li class="rscadd">Blood can be used to unholy tiles outside of the chapel.</li>
+				<li class="tweak">Coffins now heal faster and cure Nullify and Smite</li>
+				<li class="tweak">Nullrod completely ruins the vampire's day if the chaplain is using it, don't even try to take him on hand to hand</li>
+				<li class="rscadd">Being burned when dead reduces your corpse to ashes</li>
+				<li class="tweak">Holywater fucks you up almost as bad as the sun, but slower</li>
+				<li class="tweak">Chapel kills a weak vampire almost as fast as the sun</li>
+				<li class="tweak">Sunlight is even more lethal</li>
+				<li class="tweak">Picking up a bible or a nullrod will smite you(but not enough to hurt you, trying to use them does that)</li>
+				<li class="rscadd">NEW POWER - Charisma, activates at 450 blood, increases Hypnotise & Glare stun time, and greatly decreases Enthrall time/cooldown.</li>
+				<li class="rscadd">NEW POWER - Shadowy Menace, activates at 450 blood, buffs Shadow Cloak, grants immunity to blessed tiles(but not in the chapel) and gives a chance to terrify anyone who sees you.</li>
+				<li class="rscadd">NEW POWER - Undying Lord of the Night, unlocks after 666 blood, grants the ability to revive after death(but not if you've been smote or gibbed) and spawn a free vampire cloak that can hold a few items, and has moderately decent defense against bullets, fire, and holy effects.</li>
+				<li class="bugfix">Various typos and poor grammar in shit fixed, also replacing "warning"(italic red text) with the "sinister"(spooky purple text) in vamp power text blurbs</li>
+				<li class="rscadd">Added check_holy() to mob_helpers.dm, which checks if a mob is on a holy tile</li>
+				<li class="tweak">Moved vampire-related code out of life.dm through use of the new callOnLife hook</li>
+				<li class="bugfix">Moved coffin healing vampires to vampire.dm where it belongs</li>
+				<li class="rscadd">Adds new smite debuff that is increased by holy things, but decreased by vampire powers and sleeping in coffins.</li>
+			</ul>
+		</div>
+
+		<div class="commit sansserif">
+			<h2 class="date">2015.03.05</h2>
 			<h3 class="author">Deity Link updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="bugfix">Fixed a bug that prevented the Supermatter Cascade's bluespace blob from ever expanding.</li>
@@ -105,6 +144,18 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<ul class="changes bgimages16">
 				<li class="rscadd">Adds a 'stop sound' admin verb</li>
 				<li class="bugfix">Fixes ninja suit making gloves and shoes invisible, even though it doesn't cover them up</li>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed being able to leech genetic mutations by standing in the middle of a rad storm with a rad suit while taking no damage.</li>
+				<li class="tweak">Make radiation event much shorter, lower the amount of radiation needed to receive a mutation during the event. You now get 30 seconds to get into a shielded area and each wave of radiation is about 2 seconds apart.</li>
+				<li class="bugfix">Sec belt can hold smoke grenades and tele baton now.</li>
+				<li class="bugfix">Fix dropping any child of food/drink causing you to transfer your luminosity to that object.</li>
+				<li class="bugfix">Attempt at fixing becoming immune to grabs due to some buckling issues.</li>
+				<li class="bugfix">Fixed hairstyles not showing up due to duplicate names!</li>
+			</ul>
+			<h3 class="author">iconleap updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fix coin with a string can be recover after getting the premium item.</li>
 			</ul>
 		</div>
 

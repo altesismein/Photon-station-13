@@ -6,6 +6,7 @@
 	allowed = list(/obj/item/weapon/cell)
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 25)
 	siemens_coefficient = 0.2
+	flags_inv = HIDEEARS|HIDEHAIR
 
 /obj/item/clothing/suit/space/jetstream
 	desc = "It appears to be Jetstream Sam's suit"

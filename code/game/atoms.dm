@@ -101,8 +101,16 @@ var/global/list/ghdel_profiling = list()
 
 	// Idea by ChuckTheSheep to make the object even more unreferencable.
 	invisibility = 101
-
 	INVOKE_EVENT(on_destroyed, list()) // No args.
+	if(istype(beams, /list) && beams.len) beams.len = 0
+	/*if(istype(beams) && beams.len)
+		for(var/obj/effect/beam/B in beams)
+			if(B && B.target == src)
+				B.target = null
+			if(B.master && B.master.target == src)
+				B.master.target = null
+		beams.len = 0
+	*/
 
 /atom/New()
 	. = ..()
@@ -596,3 +604,20 @@ its easier to just keep the beam vertical.
 
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag
+
+/datum/proc/setGender(gend = FEMALE)
+	if(!("gender" in vars))
+		CRASH("Oh shit you stupid nigger the [src] doesn't have a gender variable.")
+	if(ishuman(src))
+		ASSERT(gend != PLURAL && gend != NEUTER)
+	src:gender = gend
+
+/atom/setGender(gend = FEMALE)
+	gender = gend
+
+/mob/living/carbon/human/setGender(gend = FEMALE)
+	if(gend == PLURAL || gend == NEUTER || (gend != FEMALE && gend != MALE))
+		CRASH("SOMEBODY SET A BAD GENDER ON [src] [gend]")
+	var/old_gender = src.gender
+	src.gender = gend
+	testing("Set [src]'s gender to [gend], old gender [old_gender] previous gender [prev_gender]")

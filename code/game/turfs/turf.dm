@@ -142,9 +142,9 @@
 
 /turf/Entered(atom/movable/Obj,atom/OldLoc)
 	var/loopsanity = 100
+
 	if(ismob(Obj))
-		Obj:lastarea = get_area(Obj.loc)
-		if(Obj:lastarea.has_gravity == 0)
+		if(Obj.areaMaster.has_gravity == 0)
 			inertial_drift(Obj)
 
 	/*
@@ -178,8 +178,6 @@
 /turf/proc/is_wood_floor()
 	return 0
 /turf/proc/is_carpet_floor()
-	return 0
-/turf/proc/is_catwalk()
 	return 0
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
 	return 0

@@ -1333,8 +1333,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			else//Cartridge menu linking
 				mode = text2num(href_list["choice"])
-				cartridge.mode = mode
-				cartridge.unlock()
+				if(cartridge)
+					cartridge.mode = mode
+					cartridge.unlock()
 	else//If not in range, can't interact or not using the pda.
 		U.unset_machine()
 		U << browse(null, "window=pda")
@@ -1606,7 +1607,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(5)
 			if(atmos_analys)
 				if(A.Adjacent(user))
-					if(!A.attackby(atmos_analys))
+					if(!A.attackby(atmos_analys, user))
 						atmos_analys.afterattack(A, user, 1)
 		if (6)
 			if(dev_analys) //let's use this instead. Much neater

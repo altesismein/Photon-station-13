@@ -50,7 +50,7 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/rocketman.ogg',\
 	'sound/music/Realhumanbean.ogg',\
 	'sound/music/Rundas.ogg',\
-	'sound/music/RedSun.ogg')
+	'sound/music/title1.ogg')
 	do
 		var/delay_timetotal = 3000 //actually 5 minutes or incase this is changed from 3000, (time_in_seconds * 10)
 		pregame_timeleft = world.timeofday + delay_timetotal

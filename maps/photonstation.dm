@@ -4,9 +4,9 @@
 //**************************************************************
 
 /datum/map/active
-	nameShort = "meta"
-	nameLong = "Meta Club"
-	map_dir = "metaclub"
+	nameShort = "photon"
+	nameLong = "Photon Station"
+	map_dir = "photonstation"
 	tDomeX = 128
 	tDomeY = 69
 	tDomeZ = 2
@@ -29,4 +29,4 @@
 		)
 
 ////////////////////////////////////////////////////////////////
-#include "metaclub.dmm"
+#include "photonstation.dmm"

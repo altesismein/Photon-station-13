@@ -6,10 +6,11 @@ env:
     - BYOND_MAJOR="507"
     - BYOND_MINOR="1273"
     matrix:
-#    - DM_MAPFILE="tgstation"
+    - DM_MAPFILE="tgstation"
     - DM_MAPFILE="metaclub"
-#    - DM_MAPFILE="defficiency"
-#    - DM_MAPFILE="taxistation"
+    - DM_MAPFILE="photonstation"
+    - DM_MAPFILE="defficiency"
+    - DM_MAPFILE="taxistation"
 
 before_install:
   - sudo apt-get update -qq

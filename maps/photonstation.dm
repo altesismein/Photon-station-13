@@ -1,10 +1,10 @@
 
 //**************************************************************
-// Map Datum -- Metaclub
+// Map Datum -- Photon Station
 //**************************************************************
 
 /datum/map/active
-	nameShort = "photon"
+	nameShort = "photonstation"
 	nameLong = "Photon Station"
 	map_dir = "photonstation"
 	tDomeX = 128

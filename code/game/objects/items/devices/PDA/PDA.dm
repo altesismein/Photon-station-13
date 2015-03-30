@@ -375,6 +375,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "pda-lawyer"
 	ttone = "..."
 
+/obj/item/device/pda/bankteller
+	name = "Bank Teller PDA"
+	default_cartridge = /obj/item/weapon/cartridge/lawyer
+	icon_state = "pda-transp"
+
 /obj/item/device/pda/botanist
 	name = "Botany PDA"
 	//default_cartridge = /obj/item/weapon/cartridge/botanist

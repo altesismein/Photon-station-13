@@ -29,5 +29,4 @@ info.json
 /bot/data
 /analysis
 /code-fixed
-*.sqlite
-baystation12.dme
+Players2.sqlite

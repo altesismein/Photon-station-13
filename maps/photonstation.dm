@@ -4,7 +4,7 @@
 //**************************************************************
 
 /datum/map/active
-	nameShort = "photonstation"
+	nameShort = "photon"
 	nameLong = "Photon Station"
 	map_dir = "photonstation"
 	tDomeX = 128

@@ -1,5 +1,10 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
+//Altesismein's access list:
+
+/var/const/access_bank = 300 // Bank and vault
+
+
 /var/const/access_security = 1 // Security equipment
 /var/const/access_brig = 2 // Brig timers and permabrig
 /var/const/access_armory = 3

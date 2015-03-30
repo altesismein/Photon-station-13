@@ -898,6 +898,12 @@ proc/process_adminbus_teleport_locs()
 	music = "signal"
 	jammed=1
 
+/area/bank
+	name = "\improper Bank"
+	icon_state = "bank"
+	music = "signal"
+	jammed=1
+
 /area/bridge/meeting_room
 	name = "\improper Heads of Staff Meeting Room"
 	icon_state = "bridge"
@@ -2036,7 +2042,6 @@ proc/process_adminbus_teleport_locs()
 	icon_state = "ai_upload"
 	jammed=2
 	anti_ethereal=1
-
 
 
 // Away Missions

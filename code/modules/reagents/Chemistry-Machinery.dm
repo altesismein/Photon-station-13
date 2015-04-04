@@ -263,6 +263,37 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return
 
 	ui_interact(user)
+//Cafe stuff
+
+/obj/machinery/chem_dispenser/brewer
+	name = "Space-Brewery"
+	icon_state = "brewer"
+	dispensable_reagents = list("tea","greentea","redtea", "coffee","milk","cream","water","hot_coco", "soymilk")
+
+
+/obj/machinery/chem_dispenser/brewer/mapping
+	max_energy = 100
+	energy = 100
+
+//Soda/booze dispensers.
+
+/obj/machinery/chem_dispenser/soda_dispenser
+	name = "Soda Dispenser"
+	icon_state = "soda_dispenser"
+	dispensable_reagents = list("cola", "sodawater", "lemon_lime", "dr_gibb", "spacemountainwind", "ice", "tonic")
+
+/obj/machinery/chem_dispenser/soda_dispenser/mapping
+	max_energy = 100
+	energy = 100
+
+/obj/machinery/chem_dispenser/booze_dispenser
+	name = "Booze Dispenser"
+	icon_state = "booze_dispenser"
+	dispensable_reagents = list("beer", "whiskey", "tequila", "vodka", "vermouth", "rum", "cognac", "wine", "kahlua", "ale", "ice")
+
+/obj/machinery/chem_dispenser/booze_dispenser/mapping
+	max_energy = 100
+	energy = 100
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -790,10 +821,11 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		src.updateUsrDialog()
 		return
 	else if(href_list["name_disease"])
+		var/norange = (usr.mutations && usr.mutations.len && (M_TK in usr.mutations))
 		var/new_name = stripped_input(usr, "Name the Disease", "New Name", "", MAX_NAME_LEN)
 		if(stat & (NOPOWER|BROKEN)) return
 		if(usr.stat || usr.restrained()) return
-		if(!in_range(src, usr)) return
+		if(!in_range(src, usr) && !norange) return
 		var/id = href_list["name_disease"]
 		if(archive_diseases[id])
 			var/datum/disease/advance/A = archive_diseases[id]
@@ -1082,10 +1114,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		usr << "The machine cannot hold any more items."
 		return 1
 
-	//Fill machine with the plantbag!
-	if(istype(O, /obj/item/weapon/storage/bag/plants))
+	//Fill machine with bags
+	if(istype(O, /obj/item/weapon/storage/bag/plants)||istype(O, /obj/item/weapon/storage/bag/chem))
 		var/obj/item/weapon/storage/bag/B = O
-		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
+		for (var/obj/item/G in O.contents)
 			B.remove_from_storage(G,src)
 			holdingitems += G
 			if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
@@ -1093,7 +1125,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				break
 
 		if(!O.contents.len)
-			user << "You empty the plant bag into the All-In-One grinder."
+			user << "You empty the [O] into the All-In-One grinder."
 
 		src.updateUsrDialog()
 		return 0
@@ -1341,23 +1373,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			if (i == round(O.amount, 1))
 				remove_object(O)
 				break
-	//Plants
-	for (var/obj/item/weapon/grown/O in holdingitems)
-		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-			break
-		var/allowed = get_allowed_by_id(O)
-		for (var/r_id in allowed)
-			var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-			var/amount = allowed[r_id]
-			if (amount == 0)
-				if (O.reagents != null && O.reagents.has_reagent(r_id))
-					beaker.reagents.add_reagent(r_id,min(O.reagents.get_reagent_amount(r_id), space))
-			else
-				beaker.reagents.add_reagent(r_id,min(amount, space))
-
-			if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-				break
-		remove_object(O)
 
 	//xenoarch
 	for(var/obj/item/weapon/rocksliver/O in holdingitems)
@@ -1381,3 +1396,21 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		O.reagents.trans_to(beaker, amount)
 		if(!O.reagents.total_volume)
 			remove_object(O)
+
+	//All other generics
+	for (var/obj/item/O in holdingitems)
+		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+			break
+		var/allowed = get_allowed_by_id(O)
+		for (var/r_id in allowed)
+			var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
+			var/amount = allowed[r_id]
+			if (amount == 0)
+				if (O.reagents != null && O.reagents.has_reagent(r_id))
+					beaker.reagents.add_reagent(r_id,min(O.reagents.get_reagent_amount(r_id), space))
+			else
+				beaker.reagents.add_reagent(r_id,min(amount, space))
+
+			if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+				break
+		remove_object(O)

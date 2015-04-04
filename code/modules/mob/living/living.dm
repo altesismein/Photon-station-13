@@ -300,12 +300,12 @@
 				L += get_contents(D.wrapped)
 		return L
 
-/mob/living/proc/check_contents_for(A)
+/mob/living/check_contents_for(A)
 	var/list/L = src.get_contents()
 
 	for(var/obj/B in L)
 		if(B.type == A)
-			return 1
+			return B
 	return 0
 
 
@@ -977,3 +977,6 @@ default behaviour is:
 				now_pushing = 0
 			return
 	return
+
+/mob/living/is_open_container()
+	return 1

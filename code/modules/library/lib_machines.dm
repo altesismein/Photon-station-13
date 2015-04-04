@@ -187,6 +187,7 @@ var/global/list/library_section_names = list("Any", "Fiction", "Non-Fiction", "A
 	icon_state = "binder"
 	anchored = 1
 	density = 1
+	machine_flags = WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/bookbinder/attackby(var/obj/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/paper/nano))
@@ -198,7 +199,7 @@ var/global/list/library_section_names = list("Any", "Fiction", "Non-Fiction", "A
 		var/obj/item/weapon/book/b = new(src.loc)
 		b.dat = O:info
 		b.name = "Print Job #[rand(100, 999)]"
-		b.icon_state = "book[rand(1,7)]"
+		b.icon_state = "book[rand(1,9)]"
 		del(O)
 	else
 		return ..()

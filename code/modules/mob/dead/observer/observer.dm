@@ -40,7 +40,7 @@
 	verbs += /mob/dead/observer/proc/dead_tele
 
 	// Our new boo spell.
-	spell_list += new /spell/aoe_turf/boo(src)
+	add_spell(new /spell/aoe_turf/boo, "grey_spell_ready")
 
 	can_reenter_corpse = flags & GHOST_CAN_REENTER
 	started_as_observer = flags & GHOST_IS_OBSERVER
@@ -846,3 +846,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return 0
 	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A]</span>")
 	return 1
+
+/mob/dead/observer/Login()
+	..()
+	observers += src
+
+/mob/dead/observer/Logout()
+	observers -= src
+	..()

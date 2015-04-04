@@ -124,12 +124,16 @@
 			user << "You can't place that item inside the disposal unit."
 			return
 
-		if(istype(I, /obj/item/weapon/storage/bag/trash))
-			var/obj/item/weapon/storage/bag/trash/T = I
-			user << "\blue You empty the bag."
-			for(var/obj/item/O in T.contents)
-				T.remove_from_storage(O,src)
-			T.update_icon()
+		if(istype(I, /obj/item/weapon/storage/bag/))
+			var/obj/item/weapon/storage/bag/B = I
+			if(B.contents.len == 0)
+				user << "<span class='notice'> You throw away the empty [B].</span>"
+				user.drop_item(src)
+				return
+			user << "<span class='notice'> You empty the [B].</span>"
+			for(var/obj/item/O in B.contents)
+				B.remove_from_storage(O,src)
+			B.update_icon()
 			update()
 			return
 
@@ -265,14 +269,12 @@
 		if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
 			usr << "\red The disposal units power is disabled."
 			return
-		..()
-		src.add_fingerprint(usr)
-		if(stat & BROKEN)
-			return
-		if(usr.stat || usr.restrained() || src.flushing)
-			return
-
-		if (in_range(src, usr) && istype(src.loc, /turf))
+		if(..())
+			usr << browse(null, "window=disposal")
+			usr.unset_machine()
+			return 1
+		else
+			src.add_fingerprint(usr)
 			usr.set_machine(src)
 
 			if(href_list["close"])
@@ -293,10 +295,6 @@
 
 			if(href_list["eject"])
 				eject()
-		else
-			usr << browse(null, "window=disposal")
-			usr.unset_machine()
-			return
 		return
 
 	// eject the contents of the disposal unit

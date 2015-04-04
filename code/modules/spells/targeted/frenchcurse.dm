@@ -6,7 +6,7 @@
 	charge_max = 300
 	spell_flags = 0
 	invocation = "FU'K Y'U D'NY"
-	invocation_type = "shout"
+	invocation_type = SpI_SHOUT
 	range = 1
 	cooldown_min = 50
 
@@ -15,12 +15,14 @@
 
 	compatible_mobs = list(/mob/living/carbon/human)
 
+	hud_state = "wiz_mime"
+
 /spell/targeted/frenchcurse/cast(list/targets, mob/user = usr)
 	..()
 	for(var/mob/living/carbon/human/target in targets)
 		if(!ishuman(target)) continue
-		var/obj/item/clothing/mask/gas/mime/magicmimemask = new /obj/item/clothing/mask/gas/mime
-		var/obj/item/clothing/under/mime/magicmimeunder = new /obj/item/clothing/under/mime
+		var/obj/item/clothing/mask/gas/mime/magicmimemask = new /obj/item/clothing/mask/gas/mime(target)
+		var/obj/item/clothing/under/mime/magicmimeunder = new /obj/item/clothing/under/mime(target)
 		magicmimemask.canremove = 0		//curses!
 		magicmimeunder.canremove = 0
 		magicmimemask.unacidable = 1	//cannot be acided
@@ -29,13 +31,8 @@
 		magicmimemask.can_flip = 0   //no pushing the mask up off your face
 		var/obj/old_mask = target.wear_mask
 		var/obj/old_uniform = target.w_uniform
-		if(old_mask)
-			target.drop_from_inventory(old_mask)
-			qdel(old_mask)
-		target.equip_to_slot_if_possible(magicmimemask, slot_wear_mask, 1, 1)
-		if(old_uniform)
-			target.drop_from_inventory(old_uniform)
-			qdel(old_uniform)
-		target.equip_to_slot_if_possible(magicmimeunder, slot_w_uniform, 1,1)
-
+		target.equip_to_slot(magicmimemask, slot_wear_mask)
+		target.equip_to_slot(magicmimeunder, slot_w_uniform)
+		del(old_mask)
+		del(old_uniform)
 		flick("e_flash", target.flash)

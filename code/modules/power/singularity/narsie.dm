@@ -1,5 +1,6 @@
 var/global/narsie_behaviour = "CultStation13"
 var/global/narsie_cometh = 0
+var/global/list/narsie_list = list()
 /obj/machinery/singularity/narsie //Moving narsie to its own file for the sake of being clearer
 	name = "Nar-Sie"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
@@ -14,6 +15,14 @@ var/global/narsie_cometh = 0
 	grav_pull = 10 //How many tiles out do we pull?
 	consume_range = 3 //How many tiles out do we eat
 
+
+/obj/machinery/singularity/narsie/New()
+	..()
+	narsie_list.Add(src)
+
+/obj/machinery/singularity/narsie/Destroy()
+	narsie_list.Remove(src)
+	..()
 
 /obj/machinery/singularity/narsie/large
 	name = "Nar-Sie"
@@ -78,12 +87,8 @@ var/global/narsie_cometh = 0
 /obj/machinery/singularity/narsie/large/eat()
 	set background = BACKGROUND_ENABLED
 
-	if (defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 1
 	for (var/turf/A in orange(consume_range, src))
 		consume(A)
-	if (defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 0
 
 /obj/machinery/singularity/narsie/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
@@ -396,14 +401,8 @@ var/global/narsie_cometh = 0
 /obj/machinery/singularity/narsie/wizard/eat()
 	set background = BACKGROUND_ENABLED
 
-	if (defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 1
-
 	for (var/turf/T in trange(consume_range, src))
 		consume(T)
-
-	if (defer_powernet_rebuild != 2)
-		defer_powernet_rebuild = 0
 
 /**
  * MR. CLEAN

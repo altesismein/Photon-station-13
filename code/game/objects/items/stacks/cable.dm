@@ -77,6 +77,10 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	else
 		return ..()
 
+/obj/item/stack/cable_coil/use(var/amount)
+	. = ..()
+	update_icon()
+
 /obj/item/stack/cable_coil/update_icon()
 	if(!_color)
 		_color = pick("red", "yellow", "blue", "green")
@@ -152,7 +156,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 		C.update_icon()
 
 		//create a new powernet with the cable, if needed it will be merged later
-		var/datum/powernet/PN = new()
+		var/datum/powernet/PN = getFromDPool(/datum/powernet)
 		PN.add_cable(C)
 
 		C.mergeConnectedNetworks(C.d2)		// merge the powernet with adjacents powernets

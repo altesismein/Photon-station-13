@@ -311,6 +311,13 @@ Class Procs:
 			update_mt_menu=1
 
 		if("buffer" in href_list)
+			if(istype(src, /obj/machinery/telecomms))
+				if(!hasvar(src, "id"))
+					usr << "<span class='danger'>A red light flashes and nothing changes.</span>"
+					return
+			else if(!hasvar(src, "id_tag"))
+				usr << "<span class='danger'>A red light flashes and nothing changes.</span>"
+				return
 			P.buffer = src
 			usr << "<span class='confirm'>A green light flashes, and the device appears in the multitool buffer.</span>"
 			update_mt_menu=1
@@ -353,12 +360,13 @@ Class Procs:
 			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 			return 1
 
+		if(!isAI(usr) && usr.z != z)
+			if(usr.z != 2)
+				usr << "<span class='warning'>WARNING: Unable to interface with \the [src.name].</span>"
+				return 1
 		var/norange = 0
-		if(istype(usr, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = usr
-			if(istype(H.l_hand, /obj/item/tk_grab))
-				norange = 1
-			else if(istype(H.r_hand, /obj/item/tk_grab))
+		if(usr.mutations && usr.mutations.len)
+			if(M_TK in usr.mutations)
 				norange = 1
 
 		if(!norange)
@@ -368,6 +376,7 @@ Class Procs:
 		log_adminghost("[key_name(usr)] screwed with [src] ([href])!")
 
 	src.add_fingerprint(usr)
+	src.add_hiddenprint(usr)
 
 	handle_multitool_topic(href,href_list,usr)
 	return 0
@@ -606,3 +615,6 @@ Class Procs:
 		if("buzz")
 			src.visible_message("<span class='notice'>\icon[src] \The [src] buzzes.</span>")
 			playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 0)
+
+/obj/machinery/proc/check_rebuild()
+	return

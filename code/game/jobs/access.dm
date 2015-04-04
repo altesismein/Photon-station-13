@@ -1,5 +1,10 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
+//Altesismein's access list:
+
+/var/const/access_bank = 300 // Bank and vault
+
+
 /var/const/access_security = 1 // Security equipment
 /var/const/access_brig = 2 // Brig timers and permabrig
 /var/const/access_armory = 3
@@ -218,7 +223,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_psychiatrist, access_cmo, access_qm, access_clown, access_mime, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting,access_weapons,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, /*vg paramedic*/, access_paramedic, access_mechanic, access_taxi)
+	            access_keycard_auth, access_tcomsat, access_gateway, /*vg paramedic*/, access_paramedic, access_mechanic, access_taxi, access_bank)
 
 /proc/get_absolutely_all_accesses()
 	return ((get_all_accesses() | get_all_centcom_access() | get_all_syndicate_access()) + access_salvage_captain)

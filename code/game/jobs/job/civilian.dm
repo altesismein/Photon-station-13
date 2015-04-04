@@ -406,3 +406,46 @@
 		L.imp_in = H
 		L.implanted = 1
 		return 1
+
+/datum/job/bankteller
+	title = "Bank Teller"
+	flag = BANKTELLER
+	department_flag = CIVILIAN
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "Captain"
+	selection_color = "#dddddd"
+	access = list(access_bank, access_maint_tunnels)
+	minimal_access = list(access_bank)
+	alt_titles = list("Bank Teller")
+
+	pdaslot=slot_belt
+	pdatype=/obj/item/device/pda/bankteller
+
+	equip(var/mob/living/carbon/human/H)
+		if(!H)	return 0
+		switch(H.backbag)
+			if(2) H.equip_or_collect(new /obj/item/weapon/storage/backpack(H), slot_back)
+			if(3) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
+			if(4) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
+		if (H.mind.role_alt_title)
+			switch(H.mind.role_alt_title)
+				if("Bank Teller")
+					H.equip_or_collect(new /obj/item/clothing/under/color/black(H), slot_w_uniform)
+					H.equip_or_collect(new /obj/item/clothing/suit/storage/lawyer/bluejacket(H), slot_wear_suit)
+					H.equip_or_collect(new /obj/item/clothing/shoes/leather(H), slot_shoes)
+		H.equip_or_collect(new /obj/item/clothing/under/rank/internalaffairs(H), slot_w_uniform)
+		H.equip_or_collect(new /obj/item/clothing/suit/storage/internalaffairs(H), slot_wear_suit)
+		H.equip_or_collect(new /obj/item/clothing/shoes/centcom(H), slot_shoes)
+		H.equip_or_collect(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
+		//H.equip_or_collect(new /obj/item/device/pda/lawyer(H), slot_belt)
+		H.equip_or_collect(new /obj/item/weapon/storage/briefcase(H), slot_l_hand)
+		if(H.backbag == 1)
+			H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
+		else
+			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
+		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+		L.imp_in = H
+		L.implanted = 1
+		return 1

@@ -47,8 +47,12 @@ var/global/datum/controller/gameticker/ticker
 	'sound/music/space_oddity.ogg',\
 	'sound/music/robocop.ogg',\
 	'sound/music/Elevator.ogg',\
-	'sound/music/rocketman.ogg',\
 	'sound/music/Realhumanbean.ogg',\
+	'sound/music/GaoGaiGar.ogg',\
+	'sound/music/GP01.ogg',\
+	'sound/music/Zeta.ogg',\
+	'sound/music/STORM.ogg',\
+	'sound/music/torvus.ogg',\
 	'sound/music/Rundas.ogg',\
 	'sound/music/title1.ogg')
 	do

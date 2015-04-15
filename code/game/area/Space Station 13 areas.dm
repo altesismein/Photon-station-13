@@ -904,6 +904,18 @@ proc/process_adminbus_teleport_locs()
 	music = "signal"
 	jammed=1
 
+/area/shop1
+	name = "\improper Shop1"
+	icon_state = "shop1"
+	music = "signal"
+	jammed=0
+
+/area/shop2
+	name = "\improper Shop2"
+	icon_state = "shop2"
+	music = "signal"
+	jammed=0
+
 /area/bridge/meeting_room
 	name = "\improper Heads of Staff Meeting Room"
 	icon_state = "bridge"

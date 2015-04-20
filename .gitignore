@@ -29,4 +29,6 @@ info.json
 /bot/data
 /analysis
 /code-fixed
-Players2.sqlite
+
+# Player preferences
+players2.sqlite

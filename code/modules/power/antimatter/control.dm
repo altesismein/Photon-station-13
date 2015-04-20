@@ -6,7 +6,7 @@
 	icon_state = "control"
 	var/icon_mod = "on" // on, critical, or fuck
 	var/old_icon_mod = "on"
-	anchored = 1
+	anchored = 0
 	density = 1
 	use_power = 1
 	idle_power_usage = 100
@@ -173,12 +173,12 @@
 			src.anchored = 0
 			disconnect_from_network()
 		else
-			user << "\red Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!"
+			user << "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/am_containment))
 		if(fueljar)
-			user << "\red There is already a [fueljar] inside!"
+			user << "<span class='warning'>There is already a [fueljar] inside!</span>"
 			return
 		fueljar = W
 		if(user.client)

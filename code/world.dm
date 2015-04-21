@@ -321,12 +321,7 @@
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\world.dm:235: s += "<b>[station_name()]</b>";
-	s += {"<b>[station_name()]</b>"
-		(
-		<a href=\"http://\">" //Change this to wherever you want the hub to link to
-		Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version
-		</a>
-		)"}
+	s += {"<b>[station_name()]</b>"(<a href=\"http://64.94.238.130\">Website</a> <a href=\"https://github.com/PJB3005/Photon-station-13\">Custom code</a>)"}
 	// END AUTOFIX
 	var/list/features = list()
 

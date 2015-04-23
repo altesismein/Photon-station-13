@@ -73,7 +73,7 @@
 
 	library_catalog.initialize()
 
-	copy_logs() // Just copy the logs.
+	spawn() copy_logs() // Just copy the logs.
 	if(config && config.log_runtimes)
 		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD")]-runtime.log")
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
@@ -189,6 +189,12 @@
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
 		s["players"] = list()
+		s["map_name"] = map.nameLong
+		s["gamestate"] = 1
+		if(ticker)
+			s["gamestate"] = ticker.current_state
+		s["active_players"] = get_active_player_count()
+		s["revision"] = return_revision()
 		var/n = 0
 		var/admins = 0
 
@@ -205,6 +211,9 @@
 		s["admins"] = admins
 
 		return list2params(s)
+	else if (findtext(T,"notes:"))
+		var/notekey = copytext(T, 7)
+		return list2params(exportnotes(notekey))
 
 
 /world/Reboot(reason)
@@ -312,12 +321,7 @@
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\world.dm:235: s += "<b>[station_name()]</b>";
-	s += {"<b>[station_name()]</b>"
-		(
-		<a href=\"http://\">" //Change this to wherever you want the hub to link to
-		Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version
-		</a>
-		)"}
+	s += {"<b>[station_name()]</b>"(<a href=\"http://64.94.238.130\">Website</a> <a href=\"https://github.com/PJB3005/Photon-station-13\">Custom code</a>)"}
 	// END AUTOFIX
 	var/list/features = list()
 

@@ -21,14 +21,25 @@
 	anchored = 1.0
 
 /obj/structure/morgue/proc/update()
-	if (src.connected)
-		src.icon_state = "morgue0"
+	if (connected)
+		icon_state = "morgue0"
 	else
-		if (src.contents.len)
-			src.icon_state = "morgue2"
+		if (contents.len > 0)
+			var/list/inside = recursive_type_check(src, /mob)
+
+			for (var/mob/body in inside)
+				if (body && body.client)
+					icon_state = "morgue4" // clone that mofo
+					return
+
+			if (inside.len > 0)
+				inside = null
+				icon_state = "morgue3" // no mobs at all, but objects inside
+			else
+				icon_state = "morgue2" // dead no-client mob
+
 		else
-			src.icon_state = "morgue1"
-	return
+			icon_state = "morgue1"
 
 /obj/structure/morgue/ex_act(severity)
 	switch(severity)
@@ -122,6 +133,8 @@
 		del(src.connected)
 	return
 
+/obj/structure/morgue/on_log()
+	update()
 
 /*
  * Morgue tray
@@ -168,7 +181,7 @@
 	if (user != O)
 		for(var/mob/B in viewers(user, 3))
 			if ((B.client && !( B.blinded )))
-				B << text("\red [] stuffs [] into []!", user, O, src)
+				B << text("<span class='warning'>[] stuffs [] into []!</span>", user, O, src)
 	return
 
 
@@ -189,14 +202,14 @@
 	var/locked = 0
 
 /obj/structure/crematorium/proc/update()
-	if (src.connected)
-		src.icon_state = "crema0"
+	if (cremating)
+		icon_state = "crema_active"
+		return
+
+	if (contents.len > 0)
+		icon_state = "crema2"
 	else
-		if (src.contents.len)
-			src.icon_state = "crema2"
-		else
-			src.icon_state = "crema1"
-	return
+		icon_state = "crema1"
 
 /obj/structure/crematorium/ex_act(severity)
 	switch(severity)
@@ -230,13 +243,13 @@
 
 /obj/structure/crematorium/attack_hand(mob/user as mob)
 //	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
-//		user.show_message("\red Uh-oh, that was a bad idea.", 1)
+//		user.show_message("<span class='warning'>Uh-oh, that was a bad idea.</span>", 1)
 //		//usr << "Uh-oh, that was a bad idea."
 //		src:loc:poison += 20000000
 //		src:loc:firelevel = src:loc:poison
 //		return
 	if (cremating)
-		usr << "\red It's locked."
+		usr << "<span class='warning'>It's locked.</span>"
 		return
 	if ((src.connected) && (src.locked == 0))
 		for(var/atom/movable/A as mob|obj in src.connected.loc)
@@ -297,7 +310,7 @@
 		del(src.connected)
 	return
 
-/obj/structure/crematorium/proc/cremate(atom/A, mob/user as mob)
+/obj/structure/crematorium/proc/cremate(mob/user)
 //	for(var/obj/machinery/crema_switch/O in src) //trying to figure a way to call the switch, too drunk to sort it out atm
 //		if(var/on == 1)
 //		return
@@ -306,20 +319,22 @@
 
 	if(contents.len <= 0)
 		for (var/mob/M in viewers(src))
-			M.show_message("\red You hear a hollow crackle.", 1)
+			M.show_message("<span class='warning'>You hear a hollow crackle.</span>", 1)
 			return
 
 	else
-		var/inside = recursive_type_check(src, /atom/movable) - src
+		var/inside = get_contents_in_object(src)
 
 		if (locate(/obj/item/weapon/disk/nuclear) in inside)
+			user << "<SPAN CLASS='warning'>You get the feeling that you shouldn't cremate one of the items in the cremator.</SPAN>"
 			return
 
 		for (var/mob/M in viewers(src))
-			M.show_message("\red You hear a roar as the crematorium activates.", 1)
+			M.show_message("<span class='warning'>You hear a roar as the crematorium activates.</span>", 1)
 
-		cremating = 1
 		locked = 1
+		cremating = 1
+		update()
 
 		for (var/mob/living/M in inside)
 			if (M.stat!=2)
@@ -340,6 +355,7 @@
 		new /obj/effect/decal/cleanable/ash(src)
 		sleep(30)
 		cremating = 0
+		update()
 		locked = 0
 		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
 	return
@@ -390,7 +406,7 @@
 	if (user != O)
 		for(var/mob/B in viewers(user, 3))
 			if ((B.client && !( B.blinded )))
-				B << text("\red [] stuffs [] into []!", user, O, src)
+				B << text("<span class='warning'>[] stuffs [] into []!</span>", user, O, src)
 			//Foreach goto(99)
 	return
 
